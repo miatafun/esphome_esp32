@@ -51,16 +51,6 @@ i2c:
     scl: GPIO4
     scan: true
 
-  #  - id: bus_b
-  #    sda: 14
-  #    scl: 15
-  #    scan: true
-# - platform: bme280
-#   i2c_id: bus_a
-#   address: 0x77
-# - platform: pmsa003i
-#   address: 0x12
-
 external_components:
   - source: github://pr#3307
     components: [ ms8607 ]
