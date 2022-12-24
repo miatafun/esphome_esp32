@@ -1,0 +1,108 @@
+# Adafruit ESP32S2 feather with MS8607 temp/humidity/pressure sensor and SMSA003i air quality sensor via i2c bus.
+# microcontroller: https://www.adafruit.com/product/5000
+# temp/humidity/pressure: https://www.adafruit.com/product/4716
+# air particulate sensor: https://www.adafruit.com/product/4632
+# Includes some sample config for BME280 sensor as well. 
+
+esphome:
+  name: esp32s2ms8607
+  on_boot:
+    priority: 1000.0
+    then:
+        # Following is critical to turn on power for i2c bus before
+        # ESPHOME tries to discover devices on i2c. Also turns on LED 
+        # on pin 13 for verification.
+      - lambda: |-
+          gpio_set_direction(GPIO_NUM_7, GPIO_MODE_OUTPUT);
+          gpio_set_level(GPIO_NUM_7, 1);
+          gpio_set_direction(GPIO_NUM_13, GPIO_MODE_OUTPUT);
+          gpio_set_level(GPIO_NUM_13, 1);
+          esp_rom_delay_us(3000000);
+
+esp32:
+  board: featheresp32-s2
+  variant: esp32s2
+  framework:
+    type: esp-idf
+    version: recommended
+
+# Enable logging
+logger:
+  level: VERY_VERBOSE
+  hardware_uart: USB_CDC
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+wifi:
+  ssid: "ssid"
+  password: "password"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "ssid"
+    password: "password"
+
+i2c:
+  - id: stemma
+    sda: GPIO3
+    scl: GPIO4
+    scan: true
+
+  #  - id: bus_b
+  #    sda: 14
+  #    scl: 15
+  #    scan: true
+# - platform: bme280
+#   i2c_id: bus_a
+#   address: 0x77
+# - platform: pmsa003i
+#   address: 0x12
+
+external_components:
+  - source: github://pr#3307
+    components: [ ms8607 ]
+
+sensor:
+  - platform: ms8607
+    temperature:
+      name: Temperature
+    humidity:
+      name: Humidity
+    pressure:
+      name: Pressure
+  # - platform: bme280
+  #   temperature:
+  #     name: "BME280 Temperature"
+  #     oversampling: 16x
+  #   pressure:
+  #     name: "BME280 Pressure"
+  #   humidity:
+  #     name: "BME280 Humidity"
+  #   address: 0x77
+  #   i2c_id: stemma
+  #   update_interval: 60s
+
+  - platform: pmsa003i
+    i2c_id: stemma
+    address: 0x12
+    pm_1_0:
+      name: "PM1.0"
+    pm_2_5:
+      name: "PM2.5"
+    pm_10_0:
+      name: "PM10.0"
+    pmc_0_3:
+      name: "PMC <0.3µm"
+    pmc_0_5:
+      name: "PMC <0.5µm"
+    pmc_1_0:
+      name: "PMC <1µm"
+    pmc_2_5:
+      name: "PMC <2.5µm"
+    pmc_5_0:
+      name: "PMC <5µm"
+    pmc_10_0:
+      name: "PMC <10µm"
