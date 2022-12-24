@@ -1,0 +1,38 @@
+# Adafruit ESP32S2 Feather with non-latching mini-relay Feather Wing.
+# microcontroller: https://www.adafruit.com/product/5000
+# relay: https://www.adafruit.com/product/2895
+
+esphome:
+  name: esp32s2-relay
+
+esp32:
+  board: featheresp32-s2
+  variant: esp32s2
+  framework:
+    type: esp-idf
+    version: recommended
+
+# Enable logging
+logger:
+
+api:
+  encryption:
+    key: "key"
+
+ota:
+  password: "password"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "ssid"
+    password: "password"
+
+switch:
+  - platform: gpio
+    pin: 39
+    name: esp32s2relay.relay
+    restore_mode: ALWAYS_OFF # Start OFF regardless of previous state.
