@@ -1,4 +1,4 @@
-# ESP32S2 microcontroller with AHT20 temperature/humidity sensor via i2c.
+# Adafruit QTPY format ESP32S2 with AHT20 temperature and humidity sensor connected via i2c.
 # microcontroller: https://www.adafruit.com/product/5325
 # temp/humidity sensor: https://www.adafruit.com/product/4566
 
