@@ -1,0 +1,59 @@
+# Adafruit ESPWROOM32 microcontroller with NeoPixel strip control via SN74AHCT125N logic level shifter.
+# microcontroller: https://www.adafruit.com/product/3405
+# logic level shifter: https://www.digikey.com/en/products/detail/texas-instruments/SN74AHCT125N/375798
+# logic level shifter datasheet: https://cdn-shop.adafruit.com/product-files/1787/1787AHC125.pdf
+# RGBW neopixels: https://www.adafruit.com/product/2832
+
+esphome:
+  name: espwroom32
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino # Note: must use arduino framework for neopixelbus platform. The esp-idf framework is not supported!
+
+# Enable logging
+logger:
+  level: VERY_VERBOSE
+  hardware_uart: UART1
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "key"
+
+ota:
+  password: "password"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "ssid"
+    password: "password"
+
+light:
+  - platform: neopixelbus
+    type: GRBW # Use GRB order for rgb-only neopixels
+    variant: SK6812 # Use WS2812 for rgb-only neopixels
+    pin: 21
+    num_leds: 298
+    default_transition_length: 0.5s
+    restore_mode: RESTORE_DEFAULT_OFF
+    name: esp32.neopixels
+    id: neopixelstrip
+    effects:
+      - addressable_rainbow:
+          name: "Rainbow"
+          speed: 10
+          width: 50
+      - flicker:
+          name: "Flicker"
+          alpha: 95%
+          intensity: 1.5%
+      - addressable_scan:
+          name: "Scan"
+          move_interval: 100ms
+          scan_width: 3
