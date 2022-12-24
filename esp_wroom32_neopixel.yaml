@@ -3,6 +3,7 @@
 # logic level shifter: https://www.digikey.com/en/products/detail/texas-instruments/SN74AHCT125N/375798
 # logic level shifter datasheet: https://cdn-shop.adafruit.com/product-files/1787/1787AHC125.pdf
 # RGBW neopixels: https://www.adafruit.com/product/2832
+# Recommended to use 100-1000uf capacitor: https://www.digikey.com/en/products/detail/rubycon/35ZLH1000MEFCG412-5X20/3568159
 
 esphome:
   name: espwroom32
