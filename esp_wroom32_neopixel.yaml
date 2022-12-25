@@ -1,5 +1,5 @@
-# Adafruit ESPWROOM32 microcontroller with NeoPixel strip control via SN74AHCT125N logic level shifter.
-# microcontroller: https://www.adafruit.com/product/3405
+# Adafruit ESPWROOM32 or ESP32V2 microcontroller with NeoPixel strip control via SN74AHCT125N logic level shifter.
+# microcontroller: https://www.adafruit.com/product/3405 or https://www.adafruit.com/product/5400
 # logic level shifter: https://www.digikey.com/en/products/detail/texas-instruments/SN74AHCT125N/375798
 # logic level shifter datasheet: https://cdn-shop.adafruit.com/product-files/1787/1787AHC125.pdf
 # RGBW neopixels: https://www.adafruit.com/product/2832
